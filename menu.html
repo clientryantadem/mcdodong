@@ -1,0 +1,648 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MC Dodong | Menu</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* Order buttons */
+        .order-btn {
+            display: inline-block;
+            margin-top: 14px;
+            padding: 11px 20px;
+            background: #e99b20;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .order-btn:hover {
+            background: #c77c0b;
+            transform: translateY(-2px);
+        }
+
+        /* Order form modal */
+        .order-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            overflow-y: auto;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .order-modal.show {
+            display: flex;
+        }
+
+        .order-box {
+            background: #fff;
+            color: #333;
+            width: 100%;
+            max-width: 480px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 15px;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .order-box h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .order-box .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            border: none;
+            background: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #555;
+        }
+
+        .order-box label {
+            display: block;
+            margin-top: 13px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .order-box input,
+        .order-box select,
+        .order-box textarea {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font: inherit;
+        }
+
+        .order-box input[readonly] {
+            background: #f3f3f3;
+        }
+
+        .order-box textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .order-total {
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 8px;
+            background: #fff3d8;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .confirm-btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #d88912;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .confirm-btn:hover {
+            background: #b8730b;
+        }
+
+        .order-note {
+            color: #666;
+            font-size: 13px;
+            margin-top: 12px;
+        }
+
+        /* Confirmation panel */
+        .confirmation {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            overflow-y: auto;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .confirmation.show {
+            display: flex;
+        }
+
+        .confirmation-box {
+            width: 100%;
+            max-width: 450px;
+            padding: 25px;
+            border-radius: 15px;
+            background: white;
+            color: #333;
+            box-sizing: border-box;
+        }
+
+        .confirmation-box h2 {
+            color: #238548;
+        }
+
+        .summary-line {
+            padding: 9px 0;
+            border-bottom: 1px solid #eee;
+            overflow-wrap: anywhere;
+        }
+
+        .summary-total {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .cancel-btn {
+            margin-top: 10px;
+            padding: 11px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="announcement">
+    GOOD FOOD, GOOD MOOD!
+    <strong>Sulit sa bawat kagat.</strong>
+</div>
+
+<header>
+    <div class="container navbar">
+        <a href="index.html" class="logo">
+            🍔 MC <span>DODONG</span>
+            <small>SARAP NA ABOT-KAYA</small>
+        </a>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="menu.html" class="active">Menu</a>
+            <a href="promos.html">Promos</a>
+            <a href="about.html">About Us</a>
+        </nav>
+
+        <a href="promos.html" class="btn">See Promos ↗</a>
+    </div>
+</header>
+
+<main>
+    <section class="page-banner">
+        <span class="eyebrow">Fresh cravings, sulit servings</span>
+        <h1>Our Menu</h1>
+        <p>
+            From burgers to crispy chicken and grilled favorites,
+            discover food that makes every peso count.
+        </p>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-heading">
+                <span class="eyebrow">Pili na ng paborito</span>
+                <h2>Dodong's Favorites</h2>
+                <p>Sample dishes and prices for our fictional restaurant.</p>
+            </div>
+
+            <div class="card-grid">
+
+                <!-- 1. Dodong Burger -->
+                <article class="card">
+                    <img
+                        src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=80"
+                        alt="Classic burger">
+
+                    <div class="card-content">
+                        <span class="tag">Bestseller</span>
+                        <h3> MCdong Burger</h3>
+                        <p>Classic beef burger with fresh vegetables.</p>
+                        <span class="price">₱99</span>
+
+                        <button type="button" class="order-btn"
+                            onclick="openOrder('MCdong Burger', 99)">
+                            Order Now
+                        </button>
+                    </div>
+                </article>
+
+                <!-- 2. Chicken-Dodong -->
+                <article class="card">
+                    <img
+                        src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=700&q=80"
+                        alt="Fried chicken">
+
+                    <div class="card-content">
+                        <span class="tag">Chicken Meals</span>
+                        <h3>MCdong Chicken</h3>
+                        <p>Crispy chicken with rice and a side dish.</p>
+                        <span class="price">₱89</span>
+
+                        <button type="button" class="order-btn"
+                            onclick="openOrder('MCdong Chicken', 89)">
+                            Order Now
+                        </button>
+                    </div>
+                </article>
+
+                <!-- 3. Dodong Liempo -->
+                <article class="card">
+                    <img
+                        src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80"
+                        alt="Grilled pork">
+
+                    <div class="card-content">
+                        <span class="tag">Grill Special</span>
+                        <h3>MCdong Liempo</h3>
+                        <p>Grilled pork belly with rice and dipping sauce.</p>
+                        <span class="price">₱129</span>
+
+                        <button type="button" class="order-btn"
+                            onclick="openOrder('MCdong Liempo', 129)">
+                            Order Now
+                        </button>
+                    </div>
+                </article>
+
+                <!-- 4. Dodong Fries -->
+                <article class="card">
+                    <img
+                        src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=700&q=80"
+                        alt="French fries">
+
+                    <div class="card-content">
+                        <span class="tag">Side Dish</span>
+                        <h3>MCdong Fries</h3>
+                        <p>Golden fries for your favorite snack.</p>
+                        <span class="price">₱49</span>
+
+                        <button type="button" class="order-btn"
+                            onclick="openOrder('MCdong Fries', 49)">
+                            Order Now
+                        </button>
+                    </div>
+                </article>
+
+                <!-- 5. MCdong Dessert -->
+                <article class="card">
+                    <img
+                        src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=700&q=80"
+                        alt="Sweet dessert">
+
+                    <div class="card-content">
+                        <span class="tag">Sweet Treat</span>
+                        <h3>MCdong Dessert</h3>
+                        <p>A sweet treat to finish your meal.</p>
+                        <span class="price">₱59</span>
+
+                        <button type="button" class="order-btn"
+                            onclick="openOrder('MCdong Dessert', 59)">
+                            Order Now
+                        </button>
+                    </div>
+                </article>
+
+                <!-- 6. MCdong Cooler -->
+                <article class="card">
+                    <img src="soda.jpg" alt="Refreshing drink">
+
+                    <div class="card-content">
+                        <span class="tag">Refreshment</span>
+                        <h3>MCdong Cooler</h3>
+                        <p>A refreshing drink for your food cravings.</p>
+                        <span class="price">₱35</span>
+
+                        <button type="button" class="order-btn"
+                            onclick="openOrder('MCdong Cooler', 35)">
+                            Order Now
+                        </button>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container cta">
+            <h2>Mas Sulit Kapag May Promo!</h2>
+            <p>Check out our fictional combo deals and barkada specials.</p>
+            <a href="promos.html" class="btn">Explore Promos ↗</a>
+        </div>
+    </section>
+</main>
+
+<!-- ORDER FORM -->
+<div class="order-modal" id="orderModal"
+     role="dialog" aria-modal="true" aria-labelledby="orderTitle">
+
+    <div class="order-box">
+        <button type="button" class="close-btn"
+            onclick="closeOrder()" aria-label="Close order form">
+            &times;
+        </button>
+
+        <h2 id="orderTitle">Place Your Order</h2>
+        <p>Fill in your details to review your order.</p>
+
+        <form id="orderForm">
+            <label for="itemName">Selected Item</label>
+            <input type="text" id="itemName" readonly>
+
+            <label for="itemPrice">Price per Item</label>
+            <input type="text" id="itemPrice" readonly>
+
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity"
+                min="1" max="99" step="1" value="1" required>
+
+            <label for="orderType">Order Type</label>
+            <select id="orderType" required>
+                <option value="Delivery">Delivery</option>
+                <option value="Pickup">Pickup</option>
+            </select>
+
+            <label for="location" id="locationLabel">
+                Delivery Location
+            </label>
+            <textarea id="location"
+                placeholder="Enter your complete address"
+                required></textarea>
+
+            <label for="contact">Contact Number</label>
+            <input type="tel" id="contact"
+                placeholder="Enter your contact number"
+                autocomplete="tel" required>
+
+            <div class="order-total">
+                Total: <span id="totalPrice">₱99.00</span>
+            </div>
+
+            <button type="submit" class="confirm-btn">
+                Review Order
+            </button>
+
+            <p class="order-note">
+                Demo only: this form does not send orders to a restaurant.
+            </p>
+        </form>
+    </div>
+</div>
+
+<!-- ORDER SUMMARY -->
+<div class="confirmation" id="confirmation"
+     role="dialog" aria-modal="true"
+     aria-labelledby="summaryTitle">
+
+    <div class="confirmation-box">
+        <h2 id="summaryTitle">Order Summary</h2>
+        <p>Please check your order details.</p>
+
+        <div id="summaryDetails"></div>
+
+        <button type="button" class="confirm-btn"
+            onclick="finishOrder()">
+            Done
+        </button>
+
+        <button type="button" class="cancel-btn"
+            onclick="backToOrder()">
+            Edit Order
+        </button>
+
+        <p class="order-note">
+            Your order has not been sent or saved.
+        </p>
+    </div>
+</div>
+
+<footer>
+    <div class="container footer-grid">
+        <div>
+            <a href="index.html" class="logo">
+                🍔 MC <span>DODONG</span>
+            </a>
+            <p>Sarap na abot-kaya!</p>
+        </div>
+
+        <div>
+            <h3>Pages</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>More</h3>
+            <ul>
+                <li><a href="promos.html">Promos</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container footer-bottom">
+        <p>© 2026 MC Dodong. Fictional educational project.</p>
+    </div>
+</footer>
+
+<script>
+    let selectedPrice = 0;
+
+    const orderModal = document.getElementById("orderModal");
+    const confirmation = document.getElementById("confirmation");
+    const orderForm = document.getElementById("orderForm");
+    const quantityInput = document.getElementById("quantity");
+    const orderType = document.getElementById("orderType");
+    const locationInput = document.getElementById("location");
+
+    function openOrder(name, price) {
+        selectedPrice = price;
+
+        orderForm.reset();
+
+        document.getElementById("itemName").value = name;
+        document.getElementById("itemPrice").value =
+            "₱" + price.toFixed(2);
+
+        quantityInput.value = 1;
+
+        updateTotal();
+        updateLocationLabel();
+
+        orderModal.classList.add("show");
+        document.body.classList.add("modal-open");
+
+        document.getElementById("quantity").focus();
+    }
+
+    function closeOrder() {
+        orderModal.classList.remove("show");
+        document.body.classList.remove("modal-open");
+    }
+
+    function updateTotal() {
+        const quantity = Number(quantityInput.value);
+
+        const total = selectedPrice *
+            (Number.isInteger(quantity) && quantity >= 1
+                ? quantity : 0);
+
+        document.getElementById("totalPrice").textContent =
+            "₱" + total.toFixed(2);
+    }
+
+    quantityInput.addEventListener("input", updateTotal);
+
+    function updateLocationLabel() {
+        const isDelivery = orderType.value === "Delivery";
+
+        document.getElementById("locationLabel").textContent =
+            isDelivery ? "Delivery Location" : "Pickup Branch";
+
+        locationInput.placeholder = isDelivery
+            ? "Enter your complete delivery address"
+            : "Enter your preferred pickup branch";
+
+        locationInput.required = true;
+    }
+
+    orderType.addEventListener("change", updateLocationLabel);
+
+    orderForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        if (!orderForm.reportValidity()) {
+            return;
+        }
+
+        const quantity = Number(quantityInput.value);
+
+        if (!Number.isInteger(quantity) ||
+            quantity < 1 || quantity > 99) {
+            alert("Please enter a quantity between 1 and 99.");
+            return;
+        }
+
+        const order = {
+            item: document.getElementById("itemName").value,
+            price: selectedPrice,
+            quantity: quantity,
+            total: selectedPrice * quantity,
+            type: orderType.value,
+            location: locationInput.value.trim(),
+            contact: document.getElementById("contact").value.trim()
+        };
+
+        if (!order.location || !order.contact) {
+            alert("Please complete your location and contact number.");
+            return;
+        }
+
+        const details = document.getElementById("summaryDetails");
+        details.replaceChildren();
+
+        const rows = [
+            ["Item", order.item],
+            ["Price per item", "₱" + order.price.toFixed(2)],
+            ["Quantity", String(order.quantity)],
+            ["Order type", order.type],
+            [order.type === "Delivery" ? "Delivery location" : "Pickup branch",
+                order.location],
+            ["Contact number", order.contact]
+        ];
+
+        rows.forEach(function(row) {
+            const line = document.createElement("div");
+            line.className = "summary-line";
+
+            const label = document.createElement("strong");
+            label.textContent = row[0] + ": ";
+
+            line.appendChild(label);
+            line.appendChild(document.createTextNode(row[1]));
+            details.appendChild(line);
+        });
+
+        const totalLine = document.createElement("p");
+        totalLine.className = "summary-total";
+        totalLine.textContent =
+            "Total: ₱" + order.total.toFixed(2);
+
+        details.appendChild(totalLine);
+
+        closeOrder();
+        confirmation.classList.add("show");
+        document.body.classList.add("modal-open");
+    });
+
+    function backToOrder() {
+        confirmation.classList.remove("show");
+        orderModal.classList.add("show");
+    }
+
+    function finishOrder() {
+        confirmation.classList.remove("show");
+        document.body.classList.remove("modal-open");
+        orderForm.reset();
+        selectedPrice = 0;
+        updateTotal();
+    }
+
+    orderModal.addEventListener("click", function(event) {
+        if (event.target === orderModal) {
+            closeOrder();
+        }
+    });
+
+    confirmation.addEventListener("click", function(event) {
+        if (event.target === confirmation) {
+            confirmation.classList.remove("show");
+            document.body.classList.remove("modal-open");
+        }
+    });
+
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            if (confirmation.classList.contains("show")) {
+                confirmation.classList.remove("show");
+                document.body.classList.remove("modal-open");
+            } else {
+                closeOrder();
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
