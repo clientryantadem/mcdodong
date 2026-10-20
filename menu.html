@@ -385,11 +385,20 @@
             <input type="number" id="quantity"
                 min="1" max="99" step="1" value="1" required>
 
-            <label for="orderType">Order Type</label>
-            <select id="orderType" required>
-                <option value="Delivery">Delivery</option>
-                <option value="Pickup">Pickup</option>
-            </select>
+           <label for="orderType">Order Type</label>
+<select id="orderType" required>
+    <option value="Delivery">Delivery</option>
+    <option value="Pickup">Pickup</option>
+</select>
+
+<label for="paymentMethod">Payment Method</label>
+<select id="paymentMethod" required>
+    <option value="">Select Payment Method</option>
+    <option value="Cash on Delivery">Cash on Delivery</option>
+    <option value="Cash on Pickup">Cash on Pickup</option>
+    <option value="GCash">GCash</option>
+    <option value="Maya">Maya</option>
+</select>
 
             <label for="location" id="locationLabel">
                 Delivery Location
@@ -554,15 +563,16 @@
             return;
         }
 
-        const order = {
-            item: document.getElementById("itemName").value,
-            price: selectedPrice,
-            quantity: quantity,
-            total: selectedPrice * quantity,
-            type: orderType.value,
-            location: locationInput.value.trim(),
-            contact: document.getElementById("contact").value.trim()
-        };
+       const order = {
+    item: document.getElementById("itemName").value,
+    price: selectedPrice,
+    quantity: quantity,
+    total: selectedPrice * quantity,
+    type: orderType.value,
+    paymentMethod: document.getElementById("paymentMethod").value,
+    location: locationInput.value.trim(),
+    contact: document.getElementById("contact").value.trim()
+};
 
         if (!order.location || !order.contact) {
             alert("Please complete your location and contact number.");
@@ -572,16 +582,18 @@
         const details = document.getElementById("summaryDetails");
         details.replaceChildren();
 
-        const rows = [
-            ["Item", order.item],
-            ["Price per item", "₱" + order.price.toFixed(2)],
-            ["Quantity", String(order.quantity)],
-            ["Order type", order.type],
-            [order.type === "Delivery" ? "Delivery location" : "Pickup branch",
-                order.location],
-            ["Contact number", order.contact]
-        ];
-
+       const rows = [
+    ["Item", order.item],
+    ["Price per item", "₱" + order.price.toFixed(2)],
+    ["Quantity", String(order.quantity)],
+    ["Order type", order.type],
+    ["Payment method", order.paymentMethod],
+    [
+        order.type === "Delivery" ? "Delivery location" : "Pickup branch",
+        order.location
+    ],
+    ["Contact number", order.contact]
+];
         rows.forEach(function(row) {
             const line = document.createElement("div");
             line.className = "summary-line";
