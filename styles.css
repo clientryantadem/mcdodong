@@ -836,3 +836,25 @@ footer a:hover {
     }
 }
 
+/* PAYMENT METHOD */
+#paymentMethod {
+    cursor: pointer;
+    background-color: #fffdf9;
+    border: 1px solid #e5d9ca;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#paymentMethod:focus {
+    border-color: #e65319;
+    box-shadow: 0 0 0 3px rgba(230, 83, 25, 0.12);
+}
+
+.order-note {
+    font-size: 12px;
+    color: #777;
+    line-height: 1.5;
+    margin-top: 6px;
+    margin-bottom: 14px;
+}
+
+
